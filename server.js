@@ -8,6 +8,7 @@ require("dotenv").config();   // ← move this line up here
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const authRoutes = require('./routes/authRoutes');
 
 const eventRoutes = require("./routes/eventRoutes");
 
@@ -38,6 +39,10 @@ mongoose.connect(MONGO_URI, {
     process.exit(1);
   });
 
+app.use('/api/auth', authRoutes);
 app.use("/api", eventRoutes);
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
 
 app.listen(5000, () => console.log("Server running on port 5000"));
